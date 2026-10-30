@@ -416,19 +416,18 @@ void CoreSignalHandlers::initPrepareConfigHandler()
     connect(m_coreController->m_connectionUiController, &ConnectionUiController::prepareConfig, this, [this]() {
         m_coreController->m_connectionController->setConnectionState(Vpn::ConnectionState::Preparing);
 
-        const QString serverId = m_coreController->m_serversController->getDefaultServerId();
-        if (serverId.isEmpty()) {
-            m_coreController->m_connectionController->setConnectionState(Vpn::ConnectionState::Disconnected);
+        if (!m_coreController->m_headServerController->isConfigured()) {
+            validateDefaultServerConfig();
             return;
         }
 
-        const serverConfigUtils::ConfigType kind = m_coreController->m_serversRepository->serverKind(serverId);
-
-        if (serverConfigUtils::isApiV2Subscription(kind) || serverConfigUtils::isLegacyApiSubscription(kind)) {
-            m_coreController->m_subscriptionUiController->validateConfig();
-        } else {
-            m_coreController->m_installUiController->validateConfig();
-        }
+        connect(m_coreController->m_headServerController, &HeadServerController::syncFinished, this, [this](bool, const QString &message) {
+            if (!message.isEmpty()) {
+                qWarning() << "Head server sync:" << message;
+            }
+            validateDefaultServerConfig();
+        }, Qt::SingleShotConnection);
+        m_coreController->m_headServerController->sync();
     });
 
     connect(m_coreController->m_subscriptionUiController, &SubscriptionUiController::configValidated, this, [this](bool isValid) {
@@ -448,6 +447,23 @@ void CoreSignalHandlers::initPrepareConfigHandler()
 
         m_coreController->m_connectionUiController->openConnection();
     });
+}
+
+void CoreSignalHandlers::validateDefaultServerConfig()
+{
+    const QString serverId = m_coreController->m_serversController->getDefaultServerId();
+    if (serverId.isEmpty()) {
+        m_coreController->m_connectionController->setConnectionState(Vpn::ConnectionState::Disconnected);
+        return;
+    }
+
+    const serverConfigUtils::ConfigType kind = m_coreController->m_serversRepository->serverKind(serverId);
+
+    if (serverConfigUtils::isApiV2Subscription(kind) || serverConfigUtils::isLegacyApiSubscription(kind)) {
+        m_coreController->m_subscriptionUiController->validateConfig();
+    } else {
+        m_coreController->m_installUiController->validateConfig();
+    }
 }
 
 void CoreSignalHandlers::initUnsupportedConnectDrawerHandler()

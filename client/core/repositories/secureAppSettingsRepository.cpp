@@ -577,3 +577,55 @@ void SecureAppSettingsRepository::setLocalProxyPortUserDefined(bool userDefined)
 {
     setValue("Conf/localProxyPortUserDefined", userDefined);
 }
+
+QString SecureAppSettingsRepository::headServerUrl() const
+{
+    return value("Conf/headServerUrl").toString();
+}
+
+void SecureAppSettingsRepository::setHeadServerUrl(const QString &url)
+{
+    setValue("Conf/headServerUrl", url);
+}
+
+QString SecureAppSettingsRepository::headServerPhone() const
+{
+    return value("Conf/headServerPhone").toString();
+}
+
+void SecureAppSettingsRepository::setHeadServerPhone(const QString &phone)
+{
+    setValue("Conf/headServerPhone", phone);
+}
+
+QString SecureAppSettingsRepository::headServerPin() const
+{
+    return value("Conf/headServerPin").toString();
+}
+
+void SecureAppSettingsRepository::setHeadServerPin(const QString &pin)
+{
+    setValue("Conf/headServerPin", pin);
+}
+
+QString SecureAppSettingsRepository::headServerDeviceId()
+{
+    QString deviceId = value("Conf/headServerDeviceId").toString();
+    if (deviceId.isEmpty()) {
+        deviceId = QUuid::createUuid().toString(QUuid::WithoutBraces);
+        setValue("Conf/headServerDeviceId", deviceId);
+    }
+    return deviceId;
+}
+
+QString SecureAppSettingsRepository::headServerRevision(const QString &ip) const
+{
+    return value("Conf/headServerRevisions").toMap().value(ip).toString();
+}
+
+void SecureAppSettingsRepository::setHeadServerRevision(const QString &ip, const QString &revision)
+{
+    QVariantMap revisions = value("Conf/headServerRevisions").toMap();
+    revisions.insert(ip, revision);
+    setValue("Conf/headServerRevisions", revisions);
+}

@@ -76,6 +76,10 @@ private const val CREATE_FILE_ACTION_CODE = 2
 private const val OPEN_FILE_ACTION_CODE = 3
 private const val CHECK_NOTIFICATION_PERMISSION_ACTION_CODE = 4
 
+private const val INSTALL_STARTED = 0
+private const val INSTALL_PERMISSION_REQUIRED = 1
+private const val INSTALL_FAILED = 2
+
 private const val PREFS_NOTIFICATION_PERMISSION_ASKED = "NOTIFICATION_PERMISSION_ASKED"
 private const val OPEN_FILE_AFTER_RESUME_DELAY_MS = 400L
 private const val KEY_PENDING_OPEN_FILE_URI = "pending_open_file_uri"
@@ -1216,6 +1220,33 @@ class AmneziaActivity : QtActivity() {
 
     @Suppress("unused")
     fun isPlay(): Boolean = BuildConfig.FLAVOR == "play"
+
+    @Suppress("unused")
+    fun getVersionCode(): Long = packageManager.getPackageInfo(packageName, 0).longVersionCode
+
+    @Suppress("unused")
+    fun installApk(path: String): Int {
+        if (!packageManager.canRequestPackageInstalls()) {
+            Log.w(TAG, "Installing packages is not allowed, opening settings")
+            startActivity(
+                Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:$packageName"))
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+            return INSTALL_PERMISSION_REQUIRED
+        }
+        return try {
+            val uri = FileProvider.getUriForFile(this, "org.amnezia.vpn.qtprovider", File(path))
+            startActivity(
+                Intent(Intent.ACTION_VIEW)
+                    .setDataAndType(uri, "application/vnd.android.package-archive")
+                    .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+            INSTALL_STARTED
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to start package installer: $e")
+            INSTALL_FAILED
+        }
+    }
 
     @Suppress("unused")
     fun getCountryCode(): String {

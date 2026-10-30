@@ -180,6 +180,8 @@ void CoreController::initCoreControllers()
     m_connectionController = new ConnectionController(m_serversRepository, m_appSettingsRepository, m_vpnConnection.get(), this);
     m_settingsController = new SettingsController(m_serversRepository, m_appSettingsRepository, this);
     m_localProxyController = new LocalProxyController(m_serversRepository, m_appSettingsRepository, m_subscriptionController, this);
+    m_headServerController = new HeadServerController(m_serversRepository, m_appSettingsRepository, m_importCoreController, this);
+    m_headServerUpdateController = new HeadServerUpdateController(m_headServerController, this);
 }
 
 void CoreController::initControllers()
@@ -215,6 +217,9 @@ void CoreController::initControllers()
 
     m_localProxyUiController = new LocalProxyUiController(m_localProxyController, this);
     setQmlContextProperty("LocalProxyController", m_localProxyUiController);
+
+    m_headServerUiController = new HeadServerUiController(m_headServerController, m_headServerUpdateController, m_appSettingsRepository, this);
+    setQmlContextProperty("HeadServerController", m_headServerUiController);
 
     m_logsUiController = new LogsUiController(m_settingsController, this);
     setQmlContextProperty("LogsController", m_logsUiController);
@@ -322,6 +327,7 @@ void CoreController::checkForAppUpdates()
         return;
     }
     m_updateController->checkForUpdates();
+    m_headServerUpdateController->check();
 }
 
 void CoreController::updateTranslator(const QLocale &locale)

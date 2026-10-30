@@ -148,6 +148,8 @@
         <file>Pages2/PageSettingsKillSwitch.qml</file>
         <file>Pages2/PageSettingsKillSwitchExceptions.qml</file>
         <file>Pages2/PageSettingsLocalProxy.qml</file>
+        <file>Pages2/PageSettingsHeadServer.qml</file>
+        <file>Pages2/PageSetupWizardHeadServer.qml</file>
         <file>Pages2/PageSettingsLogging.qml</file>
         <file>Pages2/PageSettingsLogViewer.qml</file>
         <file>Pages2/PageSettingsServerData.qml</file>

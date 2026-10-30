@@ -86,6 +86,20 @@ PageType {
                 }
 
                 ListItemType {
+                    id: headServerButton
+
+                    Layout.fillWidth: true
+
+                    text: qsTr("Head server")
+                    subtitle: qsTr("Automatic update of the VPN server address")
+                    trailingIconSource: "qrc:/images/controls/chevron-right.svg"
+
+                    onClicked: {
+                        PageController.goToPage(PageEnum.PageSettingsHeadServer)
+                    }
+                }
+
+                ListItemType {
                     id: splitTunnelingButton
 
                     Layout.fillWidth: true

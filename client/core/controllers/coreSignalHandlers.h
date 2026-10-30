@@ -35,6 +35,7 @@ private:
     void initAllowedDnsModelUpdateHandler();
     void initAppSplitTunnelingModelUpdateHandler();
     void initPrepareConfigHandler();
+    void validateDefaultServerConfig();
     void initUnsupportedConnectDrawerHandler();
     void initBackNavigationHandler();
     void initStrictKillSwitchHandler();

@@ -25,6 +25,7 @@
 #include "ui/controllers/qml/pageController.h"
 #include "ui/controllers/settingsUiController.h"
 #include "ui/controllers/localProxyUiController.h"
+#include "ui/controllers/headServerUiController.h"
 #include "ui/controllers/logsUiController.h"
 #include "ui/controllers/serversUiController.h"
 #include "ui/controllers/ipSplitTunnelingUiController.h"
@@ -46,6 +47,8 @@
 #include "core/controllers/selfhosted/installController.h"
 #include "core/controllers/settingsController.h"
 #include "core/controllers/localProxyController.h"
+#include "core/controllers/headServerController.h"
+#include "core/controllers/headServerUpdateController.h"
 #include "core/controllers/connectionController.h"
 #include "core/controllers/updateController.h"
 
@@ -181,6 +184,7 @@ private:
     ExportUiController* m_exportUiController;
     SettingsUiController* m_settingsUiController;
     LocalProxyUiController* m_localProxyUiController;
+    HeadServerUiController* m_headServerUiController;
     LogsUiController* m_logsUiController;
     ServersUiController* m_serversUiController;
     IpSplitTunnelingUiController* m_ipSplitTunnelingUiController;
@@ -211,6 +215,8 @@ private:
     ConnectionController* m_connectionController;
     SettingsController* m_settingsController;
     LocalProxyController* m_localProxyController;
+    HeadServerController* m_headServerController;
+    HeadServerUpdateController* m_headServerUpdateController;
 
     ContainersModel* m_containersModel;
     ContainersModel* m_defaultServerContainersModel;

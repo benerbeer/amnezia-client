@@ -57,6 +57,8 @@ public:
     bool requestAuthentication();
     void sendTouch(float x, float y);
     bool isPlay();
+    qint64 versionCode();
+    int installApk(const QString &path);
     QJsonObject getSubscriptionPlans();
     QJsonObject purchaseSubscription(const QString &offerToken);
     QJsonObject upgradeSubscription(const QString &offerToken, const QString &oldPurchaseToken);

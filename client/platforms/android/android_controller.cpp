@@ -364,6 +364,16 @@ bool AndroidController::isPlay()
     return callActivityMethod<jboolean>("isPlay", "()Z");
 }
 
+qint64 AndroidController::versionCode()
+{
+    return callActivityMethod<jlong>("getVersionCode", "()J");
+}
+
+int AndroidController::installApk(const QString &path)
+{
+    return callActivityMethod<jint>("installApk", "(Ljava/lang/String;)I", QJniObject::fromString(path).object<jstring>());
+}
+
 QJsonObject AndroidController::getSubscriptionPlans()
 {
     QJniObject subscriptionPlans = callActivityMethod<jstring>("getSubscriptionPlans", "()Ljava/lang/String;");

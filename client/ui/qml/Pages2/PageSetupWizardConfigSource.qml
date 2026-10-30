@@ -147,6 +147,22 @@ PageType {
                 Layout.rightMargin: 16
                 Layout.leftMargin: 16
 
+                text: qsTr("Head server address and PIN")
+                subtitle: qsTr("Request the VPN settings from the head server")
+
+                icon.source: "qrc:/images/controls/globe-2.svg"
+
+                enabled: !root.isRestoringBackup
+
+                onClicked: PageController.goToPage(PageEnum.PageSetupWizardHeadServer)
+            }
+
+            BasicCardType {
+                Layout.fillWidth: true
+                Layout.topMargin: 12
+                Layout.rightMargin: 16
+                Layout.leftMargin: 16
+
                 text: qsTr("Self-hosted VPN")
                 subtitle: qsTr("Configure Amnezia VPN on your own server")
 

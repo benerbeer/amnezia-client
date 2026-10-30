@@ -40,6 +40,24 @@ Window  {
         }
     }
 
+    Connections {
+        target: HeadServerController
+
+        function onUpdateFound() {
+            Dialogs.askQuestion(qsTr("Update available"),
+                                qsTr("Version %1 (%2)").arg(HeadServerController.updateVersion).arg(HeadServerController.updateSizeText)
+                                + (HeadServerController.updateNotes !== "" ? "\n\n" + HeadServerController.updateNotes : ""),
+                                qsTr("Update"),
+                                qsTr("Later"),
+                                function() { HeadServerController.installUpdate() },
+                                function() {})
+        }
+
+        function onUpdateMessage(message) {
+            PageController.showNotificationMessage(message)
+        }
+    }
+
     visible: !GC.isDesktop()
     width: GC.screenWidth
     height: GC.screenHeight

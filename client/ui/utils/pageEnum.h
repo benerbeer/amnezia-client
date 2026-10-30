@@ -42,6 +42,7 @@ namespace PageLoader
         PageSettingsApiSubscriptionKey,
         PageSettingsKillSwitchExceptions,
         PageSettingsLocalProxy,
+        PageSettingsHeadServer,
 
         PageServiceSftpSettings,
         PageServiceTorWebsiteSettings,
@@ -59,6 +60,7 @@ namespace PageLoader
         PageSetupWizardInstalling,
         PageSetupWizardConfigSource,
         PageSetupWizardTextKey,
+        PageSetupWizardHeadServer,
         PageSetupWizardViewConfig,
         PageSetupWizardQrReader,
         PageSetupWizardApiServicesList,

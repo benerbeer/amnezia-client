@@ -71,6 +71,16 @@ public:
     bool isStrictKillSwitchEnabled() const;
     void setStrictKillSwitchEnabled(bool enabled);
     
+    QString headServerUrl() const;
+    void setHeadServerUrl(const QString &url);
+    QString headServerPhone() const;
+    void setHeadServerPhone(const QString &phone);
+    QString headServerPin() const;
+    void setHeadServerPin(const QString &pin);
+    QString headServerDeviceId();
+    QString headServerRevision(const QString &ip) const;
+    void setHeadServerRevision(const QString &ip, const QString &revision);
+
     bool isAutoConnect() const;
     void setAutoConnect(bool enabled);
     bool isStartMinimized() const;

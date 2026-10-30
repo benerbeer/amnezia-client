@@ -97,6 +97,7 @@ android {
         }
 
         getByName("oss") {
+            manifest.srcFile("oss/AndroidManifest.xml")
             java.setSrcDirs(listOf("oss"))
         }
 
